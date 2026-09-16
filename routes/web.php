@@ -34,9 +34,9 @@ Route::middleware('auth')->group(function () {
  * hasil desain RBAC. Dipakai berulang untuk setiap modul CMMS,
  * supaya tidak perlu menulis blok route yang sama berkali-kali.
  */
-function registerModuleRoutes(string $uri, string $controller, string $module): void
-{
-    $param = Str::singular($uri);
+if (! function_exists('registerModuleRoutes')) {
+    function registerModuleRoutes(string $uri, string $controller, string $module): void {
+        $param = Str::singular($uri);
 
     Route::middleware(['auth', "permission:view_{$module}"])
         ->get("/{$uri}", [$controller, 'index'])->name("{$uri}.index");
